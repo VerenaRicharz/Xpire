@@ -3,6 +3,19 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const displayNotification = () => {
+    if (Notification.permission === "granted") {
+      navigator.serviceWorker.getRegistration().then(function(reg) {
+        if(reg){
+          const options = {
+            body: 'My first Notification!'
+          }
+          reg.showNotification('Xpire', options)
+        }       
+      })
+    }    
+  }
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +31,7 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={displayNotification}>Notify me!</button>
       </header>
     </div>
   );

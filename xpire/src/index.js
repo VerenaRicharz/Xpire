@@ -15,3 +15,8 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
+
+Notification.requestPermission(function(status) {
+  console.log('Notification permission status:', status);
+});
+
