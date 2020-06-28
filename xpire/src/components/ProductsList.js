@@ -30,18 +30,18 @@ class ProductsList extends React.Component {
         this.handleListItemClick = this.handleListItemClick.bind(this);
         this.state = {
             redirect: false,
-        }    
+        }
     }
 
     handleListItemClick = (id) => {
-        this.setState({redirect: true});
+        this.setState({ redirect: true });
         this.props.showProduct(id);
     }
 
     statusColor = (validDate) => {
         var bestBeforeMilliSec = new Date(validDate) - new Date();
-        var bestBeforeDayCount = bestBeforeMilliSec/(1000*60*60*24); 
-        
+        var bestBeforeDayCount = bestBeforeMilliSec / (1000 * 60 * 60 * 24);
+
         if (bestBeforeDayCount > 3) {
             return '#C9DEBC';
         } else if (bestBeforeDayCount > 0) {
@@ -71,15 +71,15 @@ class ProductsList extends React.Component {
                             </ListItemAvatar>
                             <ListItemText primary={`${product.name} (${product.amount})`} secondary={
                                 <div>
-                                    <div>Gültig bis: {format(new Date(product.expireDate),"dd.MM.yyyy")}</div>
+                                    {/* <div>Gültig bis: {format(new Date(product.expireDate),"dd.MM.yyyy")}</div> */}
                                     <div style={{
                                         height: '0.5rem',
                                         width: '100%',
                                         marginTop: '0.3rem',
                                         backgroundColor: this.statusColor(product.expireDate),
                                     }}></div>
-                            </div>
-                            }/>
+                                </div>
+                            } />
                         </ListItem>
                     </div>
                 ) : null}
