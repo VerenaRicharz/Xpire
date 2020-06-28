@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { addProduct, deleteProductById, clearTable, getAllProducts, updateProductById } from './Idb'
+import { addProduct, deleteProductById, clearTable, getAllProducts, updateProductById, getProductById } from './Idb'
 
 function IdbTest() {
     //component for testing the IDB
@@ -37,19 +37,32 @@ function IdbTest() {
         })
     }
     const handleUpdate = async (id, newName) => {
-        await updateProductById(id, 
+        await updateProductById(id,
             {
                 name: newName,
                 expireDate: "27.06.2020"
             }
         ).then(function (updated) {
             if (updated)
-              console.log ("update success");
+                console.log("update success");
             else
-              console.log ("Nothing was updated - error");
+                console.log("Nothing was updated - error");
         }).catch(function (e) {
-              console.log(e)
+            console.log(e)
         });
+    }
+
+    const handleImgFetch = async () => {
+        // fetch('https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg').then((res) => {
+        //     res.json()
+        // }).then((result) => {
+        //     if (result.status === 1) {
+        //         console.log(result)
+        //     }
+        // })
+        const res = await fetch("https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg");
+        const blob = await res.blob();
+        console.log(blob)
     }
 
     return (
@@ -60,8 +73,8 @@ function IdbTest() {
             <ul>
                 {allProducts ? allProducts.map((product) =>
                     <li key={product.id}><span>Name: {product.name}</span><span> ID: {product.id} </span>
-                    <button onClick={() => handleDelete(product.id)}>Delete</button>
-                    <button onClick={() => handleUpdate(product.id, "UpdateTest")}></button></li>
+                        <button onClick={() => handleDelete(product.id)}>Delete</button>
+                        <button onClick={() => handleUpdate(product.id, "UpdateTest")}>Update</button><button onClick={() => handleImgFetch(product.id)}>Fetch Picture</button></li>
                 ) : null}
             </ul>
         </div>

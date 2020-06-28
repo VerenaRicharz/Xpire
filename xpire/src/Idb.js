@@ -5,13 +5,20 @@ db.version(1).stores({
     products: "++id,name,amount,purchaseDate,expireDate, imgUrl"
 });
 
-export const addProduct = async (name, amount, purchaseDate, expireDate, imgUrl=undefined) => {
+export const addProduct = async (name, amount, purchaseDate, expireDate, imgUrl = undefined) => {
+    let image;
+    if (imgUrl) {
+        const res = await fetch(imgUrl)
+        image = await res.blob()
+        console.log(image)
+    }
     await db.products.add({
         name: name,
         amount: amount,
         purchaseDate: purchaseDate,
         expireDate: expireDate,
-        imgUrl: imgUrl
+        imgUrl: imgUrl,
+        imgBlob: image
     });
     return await db.products.toArray().then(function (arr) {
         return arr;
