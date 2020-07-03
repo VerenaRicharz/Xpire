@@ -6,7 +6,7 @@ import AppHeader from './components/AppHeader'
 import ProductsList from './components/ProductsList';
 import AddProduct from './components/AddProduct';
 import FloatingButton from './components/FloatingButton';
-import { Route, BrowserRouter as Router } from 'react-router-dom'; 
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { addProduct, deleteProductById, getAllProducts } from './Idb'
 
 class App extends React.Component {
@@ -23,10 +23,10 @@ class App extends React.Component {
   componentDidMount = () => {
     const fetch = async () => {
       await getAllProducts().then((arr) => {
-        this.setState({ products: arr}); 
+        this.setState({ products: arr });
       })
-  }
-  fetch();
+    }
+    fetch();
   }
 
   getInitialState = () => ({
@@ -36,12 +36,12 @@ class App extends React.Component {
 
   // Check function if necessary!!
   updateState = (value) => {
-    this.setState({ showProductObj : value}); 
+    this.setState({ showProductObj: value });
   }
 
   resetState = () => {
-     this.setState(this.getInitialState());
-     this.componentDidMount();
+    this.setState(this.getInitialState());
+    this.componentDidMount();
   }
 
   showProduct(id) {
@@ -55,7 +55,7 @@ class App extends React.Component {
 
   addProductToList = async (name, amount, purchaseDate, expireDate, img_url) => {
     await addProduct(name, amount, purchaseDate, expireDate, img_url).then((arr) => {
-      this.setState({ products: arr});
+      this.setState({ products: arr });
     })
   }
 
@@ -63,19 +63,20 @@ class App extends React.Component {
 
     return (
       <Router>
-        <div className="App"> 
+        <div className="App">
           <Route path="/Xpire" component={AppHeader} />
-          <Route exact path="/Xpire" render={(props) => <ProductsList products={this.state.products} showProduct={this.showProduct}/>} />
+          <Route exact path="/Xpire" render={(props) => <ProductsList products={this.state.products} showProduct={this.showProduct} />} />
           <Route exact path="/Xpire" render={(props) => <FloatingButton />} />
-          <Route exact path="/Xpire/Product" render={(props) => <AddProduct add={this.addProductToList} 
-                                                                            product={this.state.showProductObj} 
-                                                                            delete={this.deleteProduct} 
-                                                                            update={this.updateState}
-                                                                            reset={this.resetState}/>} 
-                                                                />
+          <Route path="/Xpire" component={IdbTest} />
+          <Route exact path="/Xpire/Product" render={(props) => <AddProduct add={this.addProductToList}
+            product={this.state.showProductObj}
+            delete={this.deleteProduct}
+            update={this.updateState}
+            reset={this.resetState} />}
+          />
         </div>
       </Router>
-      
+
     );
 
   }

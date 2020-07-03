@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { addProduct, deleteProductById, clearTable, getAllProducts, updateProductById, getProductById } from './Idb'
+import axios from 'axios'
+import { downloadFile } from './File';
 
 function IdbTest() {
     //component for testing the IDB
@@ -60,9 +62,14 @@ function IdbTest() {
         //         console.log(result)
         //     }
         // })
-        const res = await fetch("https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg");
-        const blob = await res.blob();
-        console.log(blob)
+        // const res = await fetch("https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg");
+        // const blob = await res.blob();
+        // console.log(blob)
+        // console.log('img fetch')
+        // let img = await axios.get("https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg")
+        let prod = await axios.get("https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg", { 'headers': { 'content-type': 'application/x-www-form-urlencoded' } })
+        console.log(prod)
+        downloadFile('https://static.openfoodfacts.org/images/products/431/150/168/2036/front_de.4.400.jpg', './Test')
     }
 
     return (
@@ -74,7 +81,7 @@ function IdbTest() {
                 {allProducts ? allProducts.map((product) =>
                     <li key={product.id}><span>Name: {product.name}</span><span> ID: {product.id} </span>
                         <button onClick={() => handleDelete(product.id)}>Delete</button>
-                        <button onClick={() => handleUpdate(product.id, "UpdateTest")}>Update</button><button onClick={() => handleImgFetch(product.id)}>Fetch Picture</button></li>
+                        <button onClick={() => handleUpdate(product.id, "UpdateTest")}>Update</button><button onClick={() => handleImgFetch()}>Fetch Picture</button></li>
                 ) : null}
             </ul>
         </div>
